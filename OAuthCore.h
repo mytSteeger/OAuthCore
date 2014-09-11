@@ -13,7 +13,7 @@ extern NSString *OAuthorizationHeader(NSURL *url,
 									  NSString *_oAuthConsumerKey, 
 									  NSString *_oAuthConsumerSecret, 
 									  NSString *_oAuthToken, 
-									  NSString *_oAuthTokenSecret
+									  NSString *_oAuthTokenSecret,
                                       NSString *_verifier);
 
 extern NSString *OAuthorizationHeaderWithCallback(NSURL *url,
