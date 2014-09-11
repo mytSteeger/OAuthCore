@@ -27,11 +27,11 @@ static NSData *HMAC_SHA1(NSString *data, NSString *key) {
 	return [NSData dataWithBytes:buf length:CC_SHA1_DIGEST_LENGTH];
 }
 
-NSString *OAuthorizationHeader(NSURL *url, NSString *method, NSData *body, NSString *_oAuthConsumerKey, NSString *_oAuthConsumerSecret, NSString *_oAuthToken, NSString *_oAuthTokenSecret) {
-	return OAuthorizationHeaderWithCallback(url, method, body, _oAuthConsumerKey, _oAuthConsumerSecret, _oAuthToken, _oAuthTokenSecret, nil);
+NSString *OAuthorizationHeader(NSURL *url, NSString *method, NSData *body, NSString *_oAuthConsumerKey, NSString *_oAuthConsumerSecret, NSString *_oAuthToken, NSString *_oAuthTokenSecret, NSString *_verifier) {
+	return OAuthorizationHeaderWithCallback(url, method, body, _oAuthConsumerKey, _oAuthConsumerSecret, _oAuthToken, _oAuthTokenSecret, _verifier, nil);
 }
 
-NSString *OAuthorizationHeaderWithCallback(NSURL *url, NSString *method, NSData *body, NSString *_oAuthConsumerKey, NSString *_oAuthConsumerSecret, NSString *_oAuthToken, NSString *_oAuthTokenSecret, NSString *_oAuthCallback) {
+NSString *OAuthorizationHeaderWithCallback(NSURL *url, NSString *method, NSData *body, NSString *_oAuthConsumerKey, NSString *_oAuthConsumerSecret, NSString *_oAuthToken, NSString *_oAuthTokenSecret, NSString *_verifier, NSString *_oAuthCallback) {
 	NSString *_oAuthNonce = [NSString ab_GUID];
 	NSString *_oAuthTimestamp = [NSString stringWithFormat:@"%d", (int)[[NSDate date] timeIntervalSince1970]];
 	NSString *_oAuthSignatureMethod = @"HMAC-SHA1";
@@ -47,6 +47,8 @@ NSString *OAuthorizationHeaderWithCallback(NSURL *url, NSString *method, NSData 
 		[oAuthAuthorizationParameters setObject:_oAuthToken forKey:@"oauth_token"];
 	if (_oAuthCallback)
 		[oAuthAuthorizationParameters setObject:_oAuthCallback forKey:@"oauth_callback"];
+    if ( _verifier )
+        [oAuthAuthorizationParameters setObject:_verifier forKey:@"oauth_verifier"];
 
 	// get query and body parameters
 	NSDictionary *additionalQueryParameters = [NSURL ab_parseURLQueryString:[url query]];
