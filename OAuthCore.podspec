@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 
   s.authors = "Loren Brichter"
   s.requires_arc = false
-  s.platforms = :ios
+  s.platform = :ios
   s.license = "Copyright (C) 2012 Loren Brichter"
   s.source = {:git => 'https://github.com/atebits/OAuthCore.git', :commit => "08727c23ae3ce27f9ec2c008d0bc1fbcc0ada20b"}
   s.source_files = "OAuthCore.{h,m}", "OAuth+Additions.{h,m}"
